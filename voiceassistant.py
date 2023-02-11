@@ -1,41 +1,69 @@
 from googletrans import Translator
 import speech_recognition as sr
+from speech_recognition import UnknownValueError
+from beepy import beep
+import threading
+from gtts import gTTS
+from pygame import mixer
+import time
+from pydub import AudioSegment
+import matplotlib.pyplot as plt
+from scipy.io import wavfile
+import numpy
 
 class VoiceAssistant:
 
     def __init__(self):
         self.mic = sr.Microphone()
         self.translator = Translator()
-        self.en_rec = sr.Recognizer()
-        self.te_rec = sr.Recognizer(language="te-IN")
-        self.hi_rec = sr.Recognizer(language="hi-IN")
+        self.recognizer = sr.Recognizer()
         self.active = False
 
     def standby(self):
         with self.mic as source:
-            audio = self.en_rec.listen(source)
+            audio = self.recognizer.listen(source)
         
-        self.active = self.recognizer.recognize_google(audio).lower() == "hey"
-
-    def process_data(self, audio):
-        pass 
-
-    def evaluate_lang(self, spectrogram):
-        pass
+        try: 
+            self.active = self.recognizer.recognize_google(audio).lower() == "hey"
+        except UnknownValueError as e: 
+            pass
+        
+        if self.active:
+            ping = threading.Thread(target=beep, args=(5,))
+            ping.start()
 
     def listen(self):
         with self.mic as source:
-            if lang == "en":
-                audio = self.en_rec.listen(source)
-            elif lang == "te": 
-                audio = self.te_rec.listen(source)
-            else: 
-                audio = self.te_rec.listen(source)
+            audio = self.recognizer.listen(source)
             
-        print(self.recognizer.recognize_google(audio))
+            with open("temp/input.wav", "wb") as file:
+                file.write(audio.get_wav())
 
-    def stt(self, speech, lang): 
+        ping = threading.Thread(target=beep, args=(5,))
+        ping.start()
+
+        return audio
+
+    def process_data(self, audio):
+        audio = AudioSegment.from_file("temp/input.wav", format="wav")
+        rate, data = wavfile.read(audio)
+        numpy.seterr(divide = 'ignore') 
+        plt.specgram(data, NFFT=128, Fs=rate, noverlap=0)
+        plt.savefig("temp/spectrogram.png")
+
+    def evaluate_lang(self, spectrogram):
         pass
+        #pass through model
+
+    def stt(self, audio, lang): 
+        if lang == "en":
+            speech = self.recognizer.recognize_google(audio)
+        elif lang == "te": 
+            speech = self.recognizer.recognize_google(audio, language="te-IN")
+        else: 
+            speech = self.recognizer.recognize_google(audio, language="hi-IN")
+
+        return audio
 
     def te_to_en(self, text): 
         return self.translator.translate(text, src="te", dest="en")
@@ -51,9 +79,17 @@ class VoiceAssistant:
 
     def query(self, text):
         pass
+        #pass query to open-source voice assitant
 
     def tts(self, lang, text):
-        pass
+        tts = gTTS(text, lang=lang, slow=False)
+        tts.save("temp/output.mp3")
+
+        mixer.init()
+        mixer.music.load("temp/output.mp3")
+        mixer.music.play()
+        while mixer.music.get_busy():
+            time.sleep(1)
 
 def main():
     va = VoiceAssistant()
