@@ -8,10 +8,10 @@ This voice assistant utilizes a custom built language detecton model that can di
 ### Alternate Use Cases
 
 ### Developers
-Srihith Pallamreddy
-Saksham Purbey
+Srihith Pallamreddy <br />
+Saksham Purbey <br />
 Rishi Manimaran
 
 ### Citations
-Indic Language Data - https://ai4bharat.org/indic-superb
+Indic Language Data - https://ai4bharat.org/indic-superb <br />
 English Language Data - 
