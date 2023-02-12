@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/d730dc9d69.js" crossorigin="anonymous"></script>
+  <script src="jquery-3.5.1.min.js"></script>
+  <script src="scripts.js"></script>
+  <link rel="stylesheet" href="index.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <title>Mercury</title>
+</head>
+
+<body onload="time_update(); loaderclose();">
+    <div id="snackbar"></div>
+    <div id="tandf">
+      <div id="collapse">
+        <div class="section" style="margin: 0px; padding: 15px; padding-left: 20px; text-align: left;">
+          <h1 class="greeting" style="padding:0px; margin:-10px;">Good Day</h1>
+          <h5 style="padding:0px; margin:-10px;">Mercury &nbsp | &nbsp Multilingual Voice Assistant</h5>
+        </div>
+          <div id="container" style="margin-bottom: 0px; margin-top: 0px;">
+            <a href="#" onclick="switchToSettings()" class="block leftArrow" style="padding: 0px;"><i class="fas fa-caret-left" style="font-size: 15px; padding: 0px; color: white; margin-left: 20px; margin-right: 20px;"></i></a>
+            <p class="block modeName"></p>
+            <a href="#" onclick="switchTo2()" class="block rightArrow" style="padding: 0px;"><i class="fas fa-caret-right" style="font-size: 15px; padding: 0px; color: white; margin-left: 20px; margin-right: 20px;"></i></a>
+          </div>
+          <div class="section box border-gradient border-gradient-color">
+            Status: I'm Listening...
+          </div>
+        <div><p></p></div>        
+      </div><br><br><br><br>
+      <img src="anim.gif" style="opacity: 0.7; border-radius: 50%" width="90%">
+    </div>
+
+    <div class="gooey">
+        <p id="introText" style="color: white;">Shoveling coal into servers...</p>
+        <span class="dot"></span>
+      </div>
+
+  </body>
+  </html>
